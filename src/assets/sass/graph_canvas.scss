@@ -1,0 +1,73 @@
+@import "_vars";
+@import "_mixins";
+
+@include includeCommonStyles;
+@include ignoreDefaultStyles;
+
+@include scrollStyles;
+
+.main-wrap-canvas{
+    width: 100%;
+    height: 100vh;
+    // background: $black;
+
+    @include flexCentreRow;
+
+    .canvas-tool-bar{
+        // width: 10%;
+        height: 100%;
+        background: $white;
+        @include box_shadow;
+        @include flexCentreCol;
+        justify-content: flex-start;
+
+        .create-graph, .zoom-workspace{
+            width: 1em;
+            height: 1em;
+            // background: $darkGrey;
+            border-radius: 0.2em;
+            border: 0.2em solid $darkGrey;
+            margin: 1em;
+
+            
+        }
+
+        .graph-work-settings{
+            position: relative;
+            // display: none;
+            .graph-work-dummy-wrap{
+                position: absolute; 
+                top: -3em;
+                left: 2em;
+                .graph-wrap{
+                    min-width: 10em;
+                    min-height: 10em;
+                    background: $white;
+                    @include box_shadow;
+
+                    .col-graph{
+                        // put inputs and buttons for graph settings here
+                        padding: 0.5em;
+                        @include flexCentreCol;
+
+                        p{
+                            font-size: 0.7em;
+                            font-weight: 300;
+                        }
+
+                        input{
+                            border: 0.1em solid $darkGrey;
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+
+    .canvas-chill{
+        width: 100%;
+        height: 100%;
+        @include flexCentreRow;
+    }
+}
