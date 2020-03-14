@@ -7,7 +7,7 @@ const x = () => {
     const theCanvas = useRef(null)
     const graphWorkArea = useRef(null)
 
-    let currentScale = 10
+    let currentScale = 40
 
     const adjustPixelLength = (val) => {
         if(val % 2 === 0){
@@ -36,11 +36,11 @@ const x = () => {
         const zoomWorkarea = (e) => {
             let sign = Math.sign(e.deltaY)
             if(sign > 0 && currentScale > 10){
-                currentScale-=1
+                currentScale-=5
             }
     
             else if(sign < 0 && currentScale < 500){
-                currentScale+=1
+                currentScale+=5
             }
     
             if(currentScale % 3 === 0){
@@ -51,11 +51,19 @@ const x = () => {
 
         window.addEventListener("wheel", zoomWorkarea)
 
+
+        function animate( time ) {
+            updateGraph(currentScale, ctx)
+            requestAnimationFrame( animate )
+        }
+
+        requestAnimationFrame( animate )
+
         
         
         // changeGraph("division-space-1513431", currentScale)
 
-        updateGraph(currentScale, ctx)
+        
     }, [])
 
     const updateGraph = (graphDivSpace, ctx) => {
@@ -73,7 +81,7 @@ const x = () => {
                 let numberOfDivisions = Math.floor(
                     xWidth / scaleSpace
                 )
-    
+
                 let count = 0
     
                 while(count < numberOfDivisions){
@@ -203,15 +211,15 @@ const x = () => {
 
                 const yFunction = (x) => {
     
-                    let y = 
-                    // Math.pow(100 - (x * x), 1/2)
-                    // getRandomArbitrary(-500, 500)
-                    Math.sqrt( ((b * x * x / a)) - 1)
-                    // +
+                    let y = (x * x / 2) + (2 / x)
+                    // // Math.pow(100 - (x * x), 1/2)
+                    // // getRandomArbitrary(-500, 500)
+                    // // Math.sqrt( ((b * x * x / a)) - 1)
+                    // // +
                     // Math.pow((10 - x * x ), 1/2) 
-                    // + Math.sin(x)
-                    // + Math.sin(x)
-                    // + Math.tan(x)
+                    // // + Math.sin(x)
+                    // // + Math.sin(x)
+                    // // + Math.tan(x)
     
                     ctx.beginPath()
                     // ctx.strokeStyle = "#29abe2"
