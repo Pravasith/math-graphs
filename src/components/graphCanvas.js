@@ -7,7 +7,9 @@ const x = () => {
     const theCanvas = useRef(null)
     const graphWorkArea = useRef(null)
 
-    let currentScale = 40
+    const [ selectedFunc, setSelectedFunc ] = useState(undefined)
+
+    let currentFunc = "3", ctx, currentScale = 40
 
     const adjustPixelLength = (val) => {
         if(val % 2 === 0){
@@ -29,7 +31,7 @@ const x = () => {
 
     useEffect(() => {
         let c = theCanvas.current
-        let ctx = c.getContext("2d")
+        ctx = c.getContext("2d")
 
         // DETECT MOUSE SCROLL UP AND DOWN
         // DETECT MOUSE SCROLL UP AND DOWN
@@ -52,6 +54,8 @@ const x = () => {
         window.addEventListener("wheel", zoomWorkarea)
 
 
+
+
         function animate( time ) {
             updateGraph(currentScale, ctx)
             requestAnimationFrame( animate )
@@ -59,12 +63,16 @@ const x = () => {
 
         requestAnimationFrame( animate )
 
-        
-        
-        // changeGraph("division-space-1513431", currentScale)
-
-        
     }, [])
+
+
+    useEffect(() => {
+        // console.log(selectedFunc)
+    }, [selectedFunc])
+
+
+
+
 
     const updateGraph = (graphDivSpace, ctx) => {
         theCanvas.current.width = graphWorkArea.current.scrollWidth
@@ -134,115 +142,16 @@ const x = () => {
 
         createAxes(graphDivSpace)
 
-        let obj1 = {
-            posX : 290,
-            posY : 200,
-            mass : 2
-        },
-        obj2 = {
-            posX : -100,
-            posY : -100,
-            mass : 3
-        }
 
-        const simulateGravity = (firstObj, secondObj) => {
-            let newCor1 = shiftCoordinates(firstObj.posX, firstObj.posY),
-            newCor2 = shiftCoordinates(secondObj.posX, secondObj.posY)
-
-            let x1 = newCor1.xNew, y1 = newCor1.yNew,
-                x2 = newCor2.xNew, y2 = newCor2.yNew
-
-            ctx.beginPath()
-            ctx.arc(x1, y1, obj1.mass, 0, 2 * Math.PI)
-            ctx.stroke()
-            ctx.fill()
-
-            ctx.beginPath()
-            ctx.strokeStyle = "#29abe2"
-            ctx.fillStyle = "#29abe2"
-            ctx.arc(x2, y2, obj2.mass, 0, 2 * Math.PI)
-            ctx.stroke()
-            ctx.fill()
-
-
-            let R = Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y1 - y2), 2))
-            let normalizedDirection = {
-                x : ((x1 - x2) / R) ,
-                y : ((y1 - y2) / R)
-            }
-
-            let G = 0.1, t = 0, u = 0.1
-
-            let startSim = setInterval(() => {
-                let s2 = (u * t) + (1 / 2 * ( G * (obj1.mass) / Math.pow(R, 2) ) * t * t)
-                // // ctx.clearRect(0, 0, c.width, c.height)
-                // // new position for obj1
-                ctx.beginPath()
-                ctx.strokeStyle = "red"
-                ctx.fillStyle = "red"
-                ctx.arc(
-                    normalizedDirection.x * s2 + x2, 
-                    normalizedDirection.y * s2 + y2,
-                    obj1.mass, 
-                    0, 
-                    2 * Math.PI
-                )
-                ctx.stroke()
-                ctx.fill()
-
-                t+= 100
-
-                if(t > 2180){
-                    clearInterval(startSim)
-                }
-
-            }, 100)
-
-
-        }
-
-        // simulateGravity(obj1, obj2)
 
         
+        // Hyperbola was here
+        // if(currentFunc)
+        // currentFunc()
 
-        const makeHyperbola = (a, b) => {
-            let x = -10
-            while(x < 10){
+        showFunction(ctx)
 
-                const yFunction = (x) => {
-    
-                    let y = (x * x / 2) + (2 / x)
-                    // // Math.pow(100 - (x * x), 1/2)
-                    // // getRandomArbitrary(-500, 500)
-                    // // Math.sqrt( ((b * x * x / a)) - 1)
-                    // // +
-                    // Math.pow((10 - x * x ), 1/2) 
-                    // // + Math.sin(x)
-                    // // + Math.sin(x)
-                    // // + Math.tan(x)
-    
-                    ctx.beginPath()
-                    // ctx.strokeStyle = "#29abe2"
-                    ctx.arc(shiftCoordinates(x, -y).xNew, shiftCoordinates(x, -y).yNew, getRandomArbitrary(0,0.8), 0, 2 * Math.PI)
-                    ctx.stroke()
-                    ctx.fill()
-    
-                    return y
-                }
-    
-                let newCor = shiftCoordinates(x, yFunction(x))
-    
-                ctx.beginPath()
-                ctx.strokeStyle = "#000000"
-                ctx.arc(newCor.xNew, newCor.yNew, 0.7, 0, 2 * Math.PI)
-                ctx.stroke()
-                ctx.fill()
-    
-                x = x + 0.05
-            }
-        }
-
-        makeHyperbola(2, 5)
+        
     }
 
     const shiftCoordinates = (xCo, yCo) => {
@@ -257,16 +166,107 @@ const x = () => {
         }
     }
 
-    const changeGraph = (type, val) => {
-        if(val !== ""){
-            if(type === "division-space-1513431"){
-                let c = theCanvas.current
-                let ctx = c.getContext("2d")
+    const showFunction = (ctx) => {
 
-                updateGraph(val, ctx)
+
+        let x = -10
+        while(x < 10){
+
+            const yFunction = (x) => {
+
+                let y
+
+                const drawReverse = (y) => {
+                    ctx.beginPath()
+                    ctx.strokeStyle = "#29abe2"
+                    ctx.fillStyle = "#29abe2"
+                    ctx.arc(
+                        shiftCoordinates(x, -y).xNew, 
+                        shiftCoordinates(x, -y).yNew, 
+                        // getRandomArbitrary(0,0.8), 
+                        0.7,
+                        0, 
+                        2 * Math.PI
+                    )
+                    ctx.stroke()
+                    ctx.fill()
+                }
+                // = 
+                // (x * x / 2) + (2 / x) // Equation
+                // Math.pow(100 - (x * x), 1/2)
+                // getRandomArbitrary(-500, 500)
+                // Math.sqrt( ((b * x * x / a)) - 1)
+                // +
+                // Math.pow((10 - x * x ), 1/2) 
+                // + Math.sin(x)
+                // + Math.sin(x)
+                // + Math.tan(x)
+
+                switch (currentFunc) {
+                    case "1":
+                        y = 2 * x + 3
+                        break
+        
+                    case "2":
+                        y = x * x 
+                        break
+        
+                    case "3":
+                        y = Math.sqrt( ((3 * x * x / 2)) + 1)
+                        drawReverse(y)
+                        break
+        
+                    case "4":
+                        y = Math.pow(10 - (x * x), 1/2)
+                        drawReverse(y)
+                        break
+        
+                    case "5":
+                        y = Math.sin(x)
+                        break
+        
+                    case "6":
+                        y = Math.tan(x)
+                        break
+        
+                    case "7":
+                        y = Math.sqrt( ((2 * x * x / 2)) + 1) + Math.pow(10 - (x * x), 0.5)
+                        drawReverse(y)
+                        break
+        
+                    case "8":
+                        y = Math.pow(10 - (x * x), 1/2) + Math.tan(x)
+                        drawReverse(y)
+                        break
+
+                    case "9":
+                        y = Math.sqrt( ((5 * x * x / 2)) - 1)
+                        drawReverse(y)
+                        break
+        
+                
+                    default:
+                        break
+                }
+
+               
+
+                return y
             }
+
+            let newCor = shiftCoordinates(x, yFunction(x))
+
+            ctx.beginPath()
+            ctx.strokeStyle = "#000000"
+            ctx.fillStyle = "#000000"
+            ctx.arc(newCor.xNew, newCor.yNew, 0.7, 0, 2 * Math.PI)
+            ctx.stroke()
+            ctx.fill()
+
+            x = x + 0.05
         }
     }
+
 
     const toggleSettings = (type) => {
         if(type === "graph"){
@@ -282,6 +282,18 @@ const x = () => {
         }
     }
 
+    const formSubmitted = (e) => {
+        // console.log(selectedFunc)
+        e.preventDefault()
+    }
+
+    const selectFunc = (e) => {
+        // setSelectedFunc(e.target.value)
+
+        currentFunc = e.target.value
+
+    }
+
     return (
         <div className="main-wrap-canvas">
             <div 
@@ -293,35 +305,77 @@ const x = () => {
                         toggleSettings("graph")
                     } }
                     >
+                        <p>Choose graph</p>
                 </div>
 
-                <div 
-                    className="zoom-workspace"
-                    onClick = { () => {
-                        toggleSettings("zoom")
-                    } }
-                    >
-                </div>
 
-                
+
+
                 <div 
                     className="graph-work-settings"
                     style = {{display : "none"}}
                     >
                     <div className="graph-work-dummy-wrap">
                         <div className="graph-wrap">
-                            <div className="col-graph">
+                            <div className="col-graph ">
                                 {/* put inputs and buttons for graph settings here */}
-                                <p>Space between divisions</p>
-                                <input 
-                                    type="number"
-                                    className = "graph-settings-workspace"
-                                    onKeyPress = {e => {
-                                        if(e.key === "Enter"){
-                                            changeGraph("division-space-1513431", e.target.value)
-                                        }
-                                    }}
-                                />
+                                {/* <h1>Pick your graph</h1> */}
+
+
+                                <div   
+                                    className="inner-graph" 
+                                    onChange={(e) => selectFunc(e)}
+                                    >
+                                    <label>
+                                        <input selected type="radio" value="1" name="gender" /> 
+                                        y = 2x + 3 (Straight line)
+                                    </label>
+
+                                    <label>
+                                        <input type="radio" value="2" name="gender" /> 
+                                        y = x^2 (Square graph)
+                                    </label>
+
+                                    <label>
+                                        <input type="radio" value="3" name="gender" /> 
+                                        Hyperbola
+                                    </label>
+
+                                    <label>
+                                        <input type="radio" value="9" name="gender" /> 
+                                        Inversed Hyperbola
+                                    </label>
+
+                                    <label>
+                                        <input type="radio" value="4" name="gender" /> 
+                                        Circle
+                                    </label>
+
+                                    <label>
+                                        <input type="radio" value="5" name="gender" /> 
+                                        Sin
+                                    </label>
+
+                                    <label>
+                                        <input type="radio" value="6" name="gender" /> 
+                                        Tan
+                                    </label>
+
+                                    <label>
+                                        <input type="radio" value="7" name="gender" /> 
+                                        Circle and Hyperbola combined
+                                    </label>
+
+                                    <label>
+                                        <input type="radio" value="8" name="gender" /> 
+                                        Circle + Tan
+                                    </label>
+
+                                  
+
+
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -331,7 +385,6 @@ const x = () => {
             <div 
                 className="canvas-chill"
                 ref= {graphWorkArea}
-                
                 >
                 <canvas
                     width = "600"
