@@ -11,10 +11,67 @@
     height: 100vh;
     // background: $black;
 
+    .pravas{
+        background: white;
+        position: absolute;
+        bottom: 2em;
+        right: 2em;
+    }
+
     @include flexCentreCol;
     justify-content: flex-start;
 
+    .rightText{
+        // width: 50%;
+        max-width: 50%;
+    }
 
+
+    .graph-work-settings{
+        // position: relative;
+        left: 0;
+        top: 4.5em;
+        position: absolute;
+        // width: 100%;
+        transition: all 0.2s ease-in-out;
+
+    }
+
+    
+    .graph-work-dummy-wrap{
+        // position: absolute;
+        padding: 0.5em;
+        // top: 4.5em;
+        // left: -27%;
+
+        .graph-wrap{
+            min-width: 10em;
+            min-height: 10em;
+            background: $white;
+            @include box_shadow;
+
+            .col-graph{
+                // put inputs and buttons for graph settings here
+                padding: 0.5em;
+                @include flexCentreCol;
+
+                p{
+                    font-size: 0.7em;
+                    font-weight: 300;
+                }
+
+                input{
+                    border: 0.1em solid $darkGrey;
+                }
+
+                .inner-graph{
+                    @include flexCentreCol;
+                    align-items: flex-start;
+                }
+
+            }
+        }
+    }
 
     
 
@@ -87,12 +144,15 @@
     }
 
     .canvas-tool-bar{
-        width: 100%;
+        width: 95%;
         // height: 1em;
         background: $white;
         @include box_shadow;
-        @include flexCentreCol;
-        align-items: flex-start;
+        @include flexCentreRow;
+        justify-content: flex-start;
+        justify-content: space-between;
+
+        padding: 0 1em;
 
         .create-graph, .zoom-workspace{
             // width: 1em;
@@ -100,6 +160,7 @@
             background: #6d6d6d;
             border-radius: 5em;
             margin: 1em;
+            margin-left: 0;
             padding: 0.35em 1em 1em 1em;
             cursor: pointer;
 
@@ -117,44 +178,7 @@
             
         }
 
-        .graph-work-settings{
-            position: relative;
-            width: 100%;
-            transition: all 0.2s ease-in-out;
-
-            .graph-work-dummy-wrap{
-                position: absolute;
-                padding: 0.5em;
-
-                .graph-wrap{
-                    min-width: 10em;
-                    min-height: 10em;
-                    background: $white;
-                    @include box_shadow;
-
-                    .col-graph{
-                        // put inputs and buttons for graph settings here
-                        padding: 0.5em;
-                        @include flexCentreCol;
-
-                        p{
-                            font-size: 0.7em;
-                            font-weight: 300;
-                        }
-
-                        input{
-                            border: 0.1em solid $darkGrey;
-                        }
-
-                        .inner-graph{
-                            @include flexCentreCol;
-                            align-items: flex-start;
-                        }
-
-                    }
-                }
-            }
-        }
+      
     }
 
     .canvas-chill{

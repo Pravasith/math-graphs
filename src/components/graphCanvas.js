@@ -243,6 +243,21 @@ const x = () => {
                         y = Math.sqrt( ((5 * x * x / 2)) - 1)
                         drawReverse(y)
                         break
+
+                    case "10":
+                        y = Math.sqrt( ((5 * x * x / 2)) - 1) + Math.tan(x)
+                        drawReverse(y)
+                        break
+        
+                    case "11":
+                        y = Math.pow(10 - (x * x), 1/2) - Math.sin(x)
+                        drawReverse(y)
+                        break
+
+                    case "12":
+                        y = Math.pow(10 - (x * x), 1/2) - Math.sqrt( ((5 * x * x / 2)) - 1)
+                        drawReverse(y)
+                        break
         
                 
                     default:
@@ -296,6 +311,100 @@ const x = () => {
 
     return (
         <div className="main-wrap-canvas">
+
+            <p className="pravas">
+                Made by <a target="_blank" href="https://twitter.com/Pravasith">Pravasith</a>
+            </p>
+
+
+            <div 
+                className="graph-work-settings"
+                style = {{display : "none"}}
+                >
+                <div className="graph-work-dummy-wrap">
+                    <div className="graph-wrap">
+                        <div className="col-graph ">
+                            {/* put inputs and buttons for graph settings here */}
+                            {/* <h1>Pick your graph</h1> */}
+
+
+                            <div   
+                                className="inner-graph" 
+                                onChange={(e) => selectFunc(e)}
+                                >
+                                <label>
+                                    <input selected type="radio" value="1" name="gender" /> 
+                                    y = 2x + 3 (Straight line)
+                                </label>
+
+                                <label>
+                                    <input type="radio" value="2" name="gender" /> 
+                                    y = x^2 (Square graph)
+                                </label>
+
+                                <label>
+                                    <input type="radio" value="3" name="gender" /> 
+                                    Hyperbola
+                                </label>
+
+                                <label>
+                                    <input type="radio" value="9" name="gender" /> 
+                                    Inversed Hyperbola
+                                </label>
+
+                                <label>
+                                    <input type="radio" value="4" name="gender" /> 
+                                    Circle
+                                </label>
+
+                                <label>
+                                    <input type="radio" value="5" name="gender" /> 
+                                    Sin
+                                </label>
+
+                                <label>
+                                    <input type="radio" value="6" name="gender" /> 
+                                    Tan
+                                </label>
+
+                                <label>
+                                    <input type="radio" value="7" name="gender" /> 
+                                    Circle and Hyperbola combined
+                                </label>
+
+                                <label>
+                                    <input type="radio" value="8" name="gender" /> 
+                                    Circle + Tan
+                                </label>
+
+                                <label>
+                                    <input type="radio" value="10" name="gender" /> 
+                                    Inverse Hyperbola + Tan
+                                </label>
+
+                                <label>
+                                    <input type="radio" value="11" name="gender" /> 
+                                    Circle - Sin
+                                </label>
+
+                                <label>
+                                    <input type="radio" value="12" name="gender" /> 
+                                    Circle - Inverse Tan
+                                </label>
+
+                                
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+        
+
+
             <div 
                 className="canvas-tool-bar"
                 >
@@ -308,78 +417,10 @@ const x = () => {
                         <p>Choose graph</p>
                 </div>
 
+                <h1 className="rightText">Use your mouse wheel to zoom in and zoom out</h1>
 
 
 
-                <div 
-                    className="graph-work-settings"
-                    style = {{display : "none"}}
-                    >
-                    <div className="graph-work-dummy-wrap">
-                        <div className="graph-wrap">
-                            <div className="col-graph ">
-                                {/* put inputs and buttons for graph settings here */}
-                                {/* <h1>Pick your graph</h1> */}
-
-
-                                <div   
-                                    className="inner-graph" 
-                                    onChange={(e) => selectFunc(e)}
-                                    >
-                                    <label>
-                                        <input selected type="radio" value="1" name="gender" /> 
-                                        y = 2x + 3 (Straight line)
-                                    </label>
-
-                                    <label>
-                                        <input type="radio" value="2" name="gender" /> 
-                                        y = x^2 (Square graph)
-                                    </label>
-
-                                    <label>
-                                        <input type="radio" value="3" name="gender" /> 
-                                        Hyperbola
-                                    </label>
-
-                                    <label>
-                                        <input type="radio" value="9" name="gender" /> 
-                                        Inversed Hyperbola
-                                    </label>
-
-                                    <label>
-                                        <input type="radio" value="4" name="gender" /> 
-                                        Circle
-                                    </label>
-
-                                    <label>
-                                        <input type="radio" value="5" name="gender" /> 
-                                        Sin
-                                    </label>
-
-                                    <label>
-                                        <input type="radio" value="6" name="gender" /> 
-                                        Tan
-                                    </label>
-
-                                    <label>
-                                        <input type="radio" value="7" name="gender" /> 
-                                        Circle and Hyperbola combined
-                                    </label>
-
-                                    <label>
-                                        <input type="radio" value="8" name="gender" /> 
-                                        Circle + Tan
-                                    </label>
-
-                                  
-
-
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <div 
