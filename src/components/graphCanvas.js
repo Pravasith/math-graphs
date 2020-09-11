@@ -313,7 +313,7 @@ const x = () => {
         <div className="main-wrap-canvas">
 
             <p className="pravas">
-                Made by <a target="_blank" href="https://twitter.com/Pravasith">Pravasith</a>
+                Made by <a target="_blank" href="https://twitter.com/Pravasith">Pravas</a>
             </p>
 
 
